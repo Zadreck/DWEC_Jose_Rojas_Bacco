@@ -34,7 +34,28 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        mensaje.textContent = "Datos correctos. Bienvenido, " + nombre;
+        document.getElementById("perfil").style.display = "none";
+        document.getElementById("juego").style.display = "block";
+
+        document.getElementById("bienvenida").textContent =
+            "Bienvenido, " + nombre.toUpperCase();
+
+        document.getElementById("edad").textContent =
+            "Tu edad es: " + edad;
+
+        // Cambiar el fondo según la primera letra
+        if (nombre.charAt(0).toLowerCase() < "n") {
+            document.getElementById("juego").style.backgroundColor = "#d6f5d6";
+        } else {
+            document.getElementById("juego").style.backgroundColor = "#d6eaff";
+        }
+
+        // Cambiar el color del nombre según la edad
+        if (edad >= 18) {
+            document.getElementById("bienvenida").style.color = "darkblue";
+        } else {
+            document.getElementById("bienvenida").style.color = "darkgreen";
+        }
 
     });
 
