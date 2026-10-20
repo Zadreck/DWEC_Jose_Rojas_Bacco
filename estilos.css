@@ -20,3 +20,17 @@ input {
     padding: 8px;
     margin: 5px;
 }
+
+#perfil,
+#juego {
+    background-color: white;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+#misiones button {
+    display: block;
+    margin: 10px auto;
+}

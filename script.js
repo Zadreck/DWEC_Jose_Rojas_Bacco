@@ -57,36 +57,25 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("bienvenida").style.color = "darkgreen";
         }
 
-    });
-    document.getElementById("misiones").addEventListener("click", function (evento) {
+        let misiones = [
+            "Buscar un tesoro",
+            "Derrotar a un monstruo",
+            "Encontrar una poción"
+        ];
 
-        if (evento.target.tagName != "BUTTON") {
-            return;
+        let zonaMisiones = document.getElementById("misiones");
+
+        zonaMisiones.innerHTML = "";
+
+        for (let i = 0; i < misiones.length; i++) {
+            let boton = document.createElement("button");
+
+            boton.textContent = misiones[i];
+            boton.dataset.indice = i;
+
+            zonaMisiones.appendChild(boton);
         }
 
-        let indice = Number(evento.target.dataset.indice);
-
-        // Comprobar si la misión ya está hecha
-        if (misionesCompletadas.includes(indice)) {
-            alert("Ya has completado esta misión");
-            return;
-        }
-
-        // Conseguir entre 1 y 10 puntos aleatorios
-        let recompensa = Math.round(Math.random() * 9) + 1;
-
-        puntosJugador = puntosJugador + recompensa;
-
-        // Guardar la misión completada
-        misionesCompletadas.push(indice);
-
-        evento.target.disabled = true;
-        evento.target.textContent += " - Completada";
-
-        document.getElementById("puntos").textContent =
-            "Puntos: " + puntosJugador;
-
-        alert("¡Misión completada! Has conseguido " + recompensa + " puntos");
-
     });
+
 });
