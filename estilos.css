@@ -1,4 +1,22 @@
 
 body {
     font-family: Arial, sans-serif;
+    background-color: #eeeeee;
+    text-align: center;
+    margin: 30px;
+}
+
+h1 {
+    color: darkblue;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
 }
