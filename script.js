@@ -1,6 +1,18 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("El juego se ha cargado correctamente");
+    document.getElementById("entrar").addEventListener("click", function () {
+
+        let nombre = document.getElementById("nombre").value;
+
+        if (nombre == "") {
+            document.getElementById("mensaje").textContent =
+                "Introduce tu nombre";
+        } else {
+            document.getElementById("mensaje").textContent =
+                "Hola, " + nombre;
+        }
+
+    });
 
 });
