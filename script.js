@@ -58,5 +58,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     });
+    document.getElementById("misiones").addEventListener("click", function (evento) {
 
+        if (evento.target.tagName != "BUTTON") {
+            return;
+        }
+
+        let indice = Number(evento.target.dataset.indice);
+
+        // Comprobar si la misión ya está hecha
+        if (misionesCompletadas.includes(indice)) {
+            alert("Ya has completado esta misión");
+            return;
+        }
+
+        // Conseguir entre 1 y 10 puntos aleatorios
+        let recompensa = Math.round(Math.random() * 9) + 1;
+
+        puntosJugador = puntosJugador + recompensa;
+
+        // Guardar la misión completada
+        misionesCompletadas.push(indice);
+
+        evento.target.disabled = true;
+        evento.target.textContent += " - Completada";
+
+        document.getElementById("puntos").textContent =
+            "Puntos: " + puntosJugador;
+
+        alert("¡Misión completada! Has conseguido " + recompensa + " puntos");
+
+    });
 });
