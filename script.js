@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         document.cookie = "jugador=" + encodeURIComponent(nombre) +
-        "; max-age=86400; path=/";
+            "; max-age=86400; path=/";
 
         console.log("Cookies guardadas: " + document.cookie);
 
@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (puntosGuardados != null) {
             puntosJugador = Number(puntosGuardados);
         }
+        document.getElementById("puntos").textContent =
+            "Puntos: " + puntosJugador;
+        document.getElementById("record").textContent =
+            "Récord: " + (Number(localStorage.getItem("record")) || 0);
         document.getElementById("perfil").style.display = "none";
         document.getElementById("juego").style.display = "block";
 
@@ -89,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         document.getElementById("misiones").addEventListener("click", function (evento) {
-
             if (evento.target.tagName != "BUTTON") {
                 return;
             }
@@ -102,30 +105,85 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             let recompensa = Math.round(Math.random() * 9) + 1;
+            let respuesta;
+            let resultadoCorrecto;
+            let descripcionOperacion;
 
-            puntosJugador = puntosJugador + recompensa;
+            if (indice == 0) {
+                let primerNumero = Math.round(Math.random() * 20) + 1;
+                let segundoNumero = Math.round(Math.random() * 20) + 1;
+                let esSuma = Math.random() < 0.5;
+
+                if (esSuma) {
+                    resultadoCorrecto = primerNumero + segundoNumero;
+                    descripcionOperacion = primerNumero + " + " + segundoNumero;
+                } else {
+                    if (segundoNumero > primerNumero) {
+                        let temporal = primerNumero;
+                        primerNumero = segundoNumero;
+                        segundoNumero = temporal;
+                    }
+                    resultadoCorrecto = primerNumero - segundoNumero;
+                    descripcionOperacion = primerNumero + " - " + segundoNumero;
+                }
+
+                respuesta = prompt(
+                    "Resuelve la operación para buscar el tesoro: " +
+                    descripcionOperacion
+                );
+                if (respuesta !== null && respuesta.trim() !== "" &&
+                    Number(respuesta) === resultadoCorrecto) {
+                    puntosJugador += recompensa;
+                    alert("¡Correcto! Has conseguido " + recompensa + " puntos.");
+                } else {
+                    alert("Respuesta incorrecta. No has conseguido puntos.");
+                }
+            } else if (indice == 1) {
+                let esMultiplicacion = Math.random() < 0.5;
+                let primerNumero = Math.round(Math.random() * 10) + 1;
+                let segundoNumero = Math.round(Math.random() * 10) + 1;
+
+                if (esMultiplicacion) {
+                    resultadoCorrecto = primerNumero * segundoNumero;
+                    descripcionOperacion = primerNumero + " × " + segundoNumero;
+                } else {
+                    resultadoCorrecto = primerNumero;
+                    descripcionOperacion =
+                        (primerNumero * segundoNumero) + " ÷ " + segundoNumero;
+                }
+
+                respuesta = prompt(
+                    "Resuelve la operación para derrotar al monstruo: " +
+                    descripcionOperacion
+                );
+                if (respuesta !== null && respuesta.trim() !== "" &&
+                    Number(respuesta) === resultadoCorrecto) {
+                    puntosJugador += recompensa;
+                    alert("¡Correcto! Has conseguido " + recompensa + " puntos.");
+                } else {
+                    puntosJugador -= recompensa;
+                    alert("Respuesta incorrecta. Has perdido " + recompensa + " puntos.");
+                }
+            } else {
+                puntosJugador += recompensa;
+                alert("Has conseguido " + recompensa + " puntos.");
+            }
+
             misionesCompletadas.push(indice);
-
             evento.target.disabled = true;
             evento.target.textContent += " - Completada";
-            
-            // Guardar los puntos de la sesión
+
             sessionStorage.setItem("puntos", puntosJugador);
 
-            // Comprobar si hay un nuevo récord
             let recordActual = Number(localStorage.getItem("record")) || 0;
 
             if (puntosJugador > recordActual) {
                 localStorage.setItem("record", puntosJugador);
-
                 document.getElementById("record").textContent =
                     "Récord: " + puntosJugador;
             }
             document.getElementById("puntos").textContent =
                 "Puntos: " + puntosJugador;
-
-            alert("Has conseguido " + recompensa + " puntos");
-
         });
 
         
@@ -154,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
         });
-        
         document.getElementById("reiniciar").addEventListener("click", function () {
 
             sessionStorage.removeItem("puntos");
@@ -163,7 +220,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
-
     });
-
 });
