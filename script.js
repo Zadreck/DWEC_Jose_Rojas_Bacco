@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
             mensaje.textContent = "Acceso denegado";
             return;
         }
+        document.cookie = "jugador=" + encodeURIComponent(nombre) +
+        "; max-age=86400; path=/";
+
+        console.log("Cookies guardadas: " + document.cookie);
 
         // Recuperar los puntos de esta sesión
         let puntosGuardados = sessionStorage.getItem("puntos");
@@ -150,6 +154,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
         });
+        
+        document.getElementById("reiniciar").addEventListener("click", function () {
+
+            sessionStorage.removeItem("puntos");
+
+            window.location.reload();
+
+        });
+
 
     });
 
