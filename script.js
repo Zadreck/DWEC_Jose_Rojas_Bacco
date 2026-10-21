@@ -36,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Recuperar los puntos de esta sesión
+        let puntosGuardados = sessionStorage.getItem("puntos");
+
+        if (puntosGuardados != null) {
+            puntosJugador = Number(puntosGuardados);
+        }
         document.getElementById("perfil").style.display = "none";
         document.getElementById("juego").style.display = "block";
 
@@ -98,7 +104,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             evento.target.disabled = true;
             evento.target.textContent += " - Completada";
+            
+            // Guardar los puntos de la sesión
+            sessionStorage.setItem("puntos", puntosJugador);
 
+            // Comprobar si hay un nuevo récord
+            let recordActual = Number(localStorage.getItem("record")) || 0;
+
+            if (puntosJugador > recordActual) {
+                localStorage.setItem("record", puntosJugador);
+
+                document.getElementById("record").textContent =
+                    "Récord: " + puntosJugador;
+            }
             document.getElementById("puntos").textContent =
                 "Puntos: " + puntosJugador;
 
