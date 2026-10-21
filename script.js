@@ -106,6 +106,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
+        
+        document.getElementById("ayuda").addEventListener("click", function () {
+
+            let nombreMostrado =
+                document.getElementById("bienvenida").textContent;
+
+            let edadMostrada =
+                document.getElementById("edad").textContent;
+
+            let puntosMostrados =
+                document.getElementById("puntos").textContent;
+
+            let texto = nombreMostrado + "\n";
+            texto += edadMostrada + "\n";
+            texto += puntosMostrados + "\n";
+            texto += "Misiones completadas: " + misionesCompletadas.length;
+
+            let ventana = window.open("", "ayuda", "width=400,height=300");
+
+            if (ventana != null) {
+                ventana.document.body.innerText = texto;
+            } else {
+                alert("El navegador ha bloqueado la ventana");
+            }
+
+        });
+
     });
 
 });
