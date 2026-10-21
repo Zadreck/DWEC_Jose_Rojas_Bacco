@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("entrar").addEventListener("click", function () {
 
+        let puntosJugador = 0;
+        let misionesCompletadas = [];
         let nombre = document.getElementById("nombre").value.trim();
         let fecha = document.getElementById("fecha").value;
         let mensaje = document.getElementById("mensaje");
@@ -75,6 +77,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
             zonaMisiones.appendChild(boton);
         }
+
+        document.getElementById("misiones").addEventListener("click", function (evento) {
+
+            if (evento.target.tagName != "BUTTON") {
+                return;
+            }
+
+            let indice = Number(evento.target.dataset.indice);
+
+            if (misionesCompletadas.includes(indice)) {
+                alert("Ya has completado esta misión");
+                return;
+            }
+
+            let recompensa = Math.round(Math.random() * 9) + 1;
+
+            puntosJugador = puntosJugador + recompensa;
+            misionesCompletadas.push(indice);
+
+            evento.target.disabled = true;
+            evento.target.textContent += " - Completada";
+
+            document.getElementById("puntos").textContent =
+                "Puntos: " + puntosJugador;
+
+            alert("Has conseguido " + recompensa + " puntos");
+
+        });
 
     });
 
